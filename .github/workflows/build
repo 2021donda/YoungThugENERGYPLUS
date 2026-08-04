@@ -1,0 +1,34 @@
+name: Build iOS IPA (non firmato)
+
+# Va avviato a mano dalla tab "Actions" del repo su GitHub (pulsante "Run workflow").
+# Serve perché compilare per iOS richiede un Mac con Xcode: qui lo fornisce
+# gratis un runner macOS di GitHub, così non serve possederne uno.
+on:
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - run: flutter pub get
+
+      # --no-codesign: build senza certificato Apple (non ne abbiamo uno qui).
+      # L'app verrà firmata dopo, sul tuo PC, con Sideloadly + il tuo Apple ID.
+      - run: flutter build ios --release --no-codesign
+
+      - name: Impacchetta come .ipa (non firmato)
+        run: |
+          mkdir Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r volt_energy_app.ipa Payload
+
+       - uses: actions/upload-artifact@v4
+        with:
+          name: volt-energy-app-ipa
+          path: volt_energy_app.ipa
