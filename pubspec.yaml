@@ -1,0 +1,27 @@
+name: volt_energy_app
+description: "Mockup UI per esposizione - gestione bollette (dati statici, nessun backend reale)."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  # Per usare una tua immagine al posto del placeholder grafico:
+  # 1) crea la cartella assets/images/ nella root del progetto
+  # 2) mettici dentro un file, es. hero.png
+  # 3) scommenta le righe qui sotto
+  # 4) passa imagePath: 'assets/images/hero.png' a HeroBanner (vedi splash_screen.dart)
+  #
+  # assets:
+  #   - assets/images/tuamamma.png
